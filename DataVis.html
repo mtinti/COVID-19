@@ -13514,13 +13514,99 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to html_toc analysis_def.ipynb
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to html_toc DataVis.ipynb
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[NbConvertApp] Converting notebook DataVis.ipynb to html_toc
+[NbConvertApp] Support files will be in DataVis_files/
+[NbConvertApp] Making directory DataVis_files
+[NbConvertApp] Making directory DataVis_files
+[NbConvertApp] Making directory DataVis_files
+[NbConvertApp] Writing 312360 bytes to DataVis.html
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add DataVis*
+<span class="o">!</span>git add -u
+<span class="o">!</span>git commit -m <span class="s1">&#39;add toc to notebook&#39;</span>
+<span class="o">!</span>git push -u origin master
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[master 7a2032e] add toc to notebook
+ Committer: Michele Tinti &lt;mtinti@ls29490.home&gt;
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 7 files changed, 13606 insertions(+), 30 deletions(-)
+ create mode 100644 DataVis.html
+ create mode 100644 DataVis_files/DataVis_11_1.png
+ create mode 100644 DataVis_files/DataVis_13_0.png
+ create mode 100644 DataVis_files/DataVis_8_0.png
+ rewrite Fig2.png (99%)
+ rewrite Fig3.png (98%)
+Counting objects: 10, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (10/10), 215.00 KiB | 0 bytes/s, done.
+Total 10 (delta 2), reused 0 (delta 0)
+remote: Resolving deltas: 100% (2/2), completed with 2 local objects.
+To https://github.com/mtinti/COVID-19.git
+   395bc02..7a2032e  master -&gt; master
+Branch master set up to track remote branch master from origin.
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -13530,9 +13616,7 @@ Already up-to-date.
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add -u
-<span class="o">!</span>git commit -m <span class="s1">&#39;add toc to notebook&#39;</span>
-<span class="o">!</span>git push -u origin master
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
