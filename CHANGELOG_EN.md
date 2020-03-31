@@ -33,9 +33,9 @@ All changes to the project, new features and information are documented in this 
 - Add: "Note" (Notes) in "dati-regioni", "dati-province" and "dati-andamento-nazionale"
 - Add: "note" dataset
 
-## Next updates - 2020-03-31 @ 12:00 (italian hour)
+## 2020-03-30
 
-- Change: "totale_attualmente_positivi" renamed to "totale_positivi" in  (ricoverati_con_sintomi + terapia_intensiva + totale_ospedalizzati) in "dati_regioni" and "dati_andamento_nazionale"
-- Add: "variazione_totale_positivi" (totale_attualmente positivi current day - totale_attualmente positivi previous day) in "dati_regioni" and "dati_andamento_nazionale"
-- Change: "nuovi_attualmente_positivi" renamed to "nuovi_positivi" (totale_casi current day - totale_casi previous day) in "dati_regioni" and "dati_andamento_nazionale"
+- Change: "totale_attualmente_positivi" renamed to "totale_positivi" (ricoverati_con_sintomi + terapia_intensiva + isolamento domiciliare) in "dati_regioni" and "dati_andamento_nazionale"
+- Change: "nuovi_attualmente_positivi" renamed to "variazione_totale_positivi" (totale_attualmente positivi giorno corrente - totale_attualmente positivi giorno precedente) in "dati_regioni" and "dati_andamento_nazionale"
+- Add: "nuovi_positivi" (totale_casi giorno corrente - totale_casi giorno precedente) in "dati_regioni" and "dati_andamento_nazionale"
 - Change: Regione "Emilia Romagna" renamed to "Emilia-Romagna" in "dati-regioni" and "dati-province" ("denominazione_regione")

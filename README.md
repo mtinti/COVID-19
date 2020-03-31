@@ -5,25 +5,27 @@
 [![GitHub license](https://img.shields.io/badge/License-Creative%20Commons%20Attribution%204.0%20International-blue)](https://github.com/pcm-dpc/COVID-19/blob/master/LICENSE)
 [![GitHub commit](https://img.shields.io/github/last-commit/pcm-dpc/COVID-19)](https://github.com/pcm-dpc/COVID-19/commits/master)
 
+## Aggiornamento effettuato!
+
 ## Aggiornamenti schema dataset 30/03/2019 @ 12:00 (Ora italiana)
 ## Dataset schema update 30/03/2019 @ 12:00 (Italian hour)
 
 ### Dataset:
 - dati_regioni (csv / json)
 - dati_andamento_nazionale (csv / json)
-- dati_province (csv / json) - (solo modifica nome/only change name "Emilia Romagna" in "Emilia-Romagna")
+- dati_province (csv / json) - (solo modifica nome/only change name "Emilia-Romagna" in "Emilia-Romagna")
 
 ### IT
-- Modifica: "totale_attualmente_positivi" rinominato in "totale_positivi" (ricoverati_con_sintomi + terapia_intensiva + totale_ospedalizzati)
-- Aggiunta: "variazione_totale_positivi" (totale_attualmente positivi giorno corrente - totale_attualmente positivi giorno precedente)
-- Modifica: "nuovi_attualmente_positivi" rinominato in "nuovi_positivi" (totale_casi giorno corrente - totale_casi giorno precedente)
-- Modifica: Regione "Emilia Romagna" rinominato in "Emilia-Romagna"
+- Modifica: "totale_attualmente_positivi" rinominato in "totale_positivi" (ricoverati_con_sintomi + terapia_intensiva + isolamento domiciliare) in "dati_regioni" e "dati_andamento_nazionale"
+- Modifica: "nuovi_attualmente_positivi" rinominato in "variazione_totale_positivi" (totale_attualmente positivi giorno corrente - totale_attualmente positivi giorno precedente) in "dati_regioni" e "dati_andamento_nazionale"
+- Aggiunta: "nuovi_positivi" (totale_casi giorno corrente - totale_casi giorno precedente) in "dati_regioni" e "dati_andamento_nazionale"
+- Modifica: Regione "Emilia Romagna" rinominato in "Emilia-Romagna" in "dati-regioni" e "dati-province" ("denominazione_regione")
 
 ### EN
-- Change: "totale_attualmente_positivi" renamed to "totale_positivi" (ricoverati_con_sintomi + terapia_intensiva + totale_ospedalizzati)
-- Add: "variazione_totale_positivi" (totale_attualmente positivi current day - totale_attualmente positivi previous day)
-- Change: "nuovi_attualmente_positivi" renamed to "nuovi_positivi" (totale_casi current day - totale_casi previous day)
-- Change: Regione "Emilia Romagna" renamed to "Emilia-Romagna"
+- Change: "totale_attualmente_positivi" renamed to "totale_positivi" (ricoverati_con_sintomi + terapia_intensiva + isolamento domiciliare) in "dati_regioni" and "dati_andamento_nazionale"
+- Change: "nuovi_attualmente_positivi" renamed to "variazione_totale_positivi" (totale_attualmente positivi giorno corrente - totale_attualmente positivi giorno precedente) in "dati_regioni" and "dati_andamento_nazionale"
+- Add: "nuovi_positivi" (totale_casi giorno corrente - totale_casi giorno precedente) in "dati_regioni" and "dati_andamento_nazionale"
+- Change: Regione "Emilia Romagna" renamed to "Emilia-Romagna" in "dati-regioni" and "dati-province" ("denominazione_regione")
 
 ### Esempi / Examples
 
@@ -51,7 +53,7 @@ data,stato,codice_regione,denominazione_regione,lat,long,ricoverati_con_sintomi,
 ## Avvisi
 
 ```diff
-- 29/03/2020: dati Regione Emilia Romagna parziali (dato tampone non aggiornato).
+- 29/03/2020: dati Regione Emilia-Romagna parziali (dato tampone non aggiornato).
 - 26/03/2020: dati Regione Piemonte parziali (-50 deceduti - comunicazione tardiva).
 - 18/03/2020: dati Regione Campania non pervenuti.
 - 18/03/2020: dati Provincia di Parma non pervenuti.
