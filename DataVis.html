@@ -13567,7 +13567,7 @@ Merge made by the &#39;recursive&#39; strategy.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">make_fig1</span><span class="p">()</span>
@@ -13609,7 +13609,7 @@ Merge made by the &#39;recursive&#39; strategy.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">make_fig2</span><span class="p">()</span>
@@ -13628,26 +13628,10 @@ Merge made by the &#39;recursive&#39; strategy.
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>737477.6 737530.4
-1.1
--203.4 4271.4
-1.1
--0.019199817660169607 3.1529492623660604
-0.04139268515822508
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
 
 
 <div class="output_png output_subarea ">
-<img src="DataVis_files/DataVis_10_1.png"
+<img src="DataVis_files/DataVis_10_0.png"
 >
 </div>
 
@@ -13667,7 +13651,7 @@ Merge made by the &#39;recursive&#39; strategy.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">make_fig3</span><span class="p">()</span>
@@ -13686,22 +13670,10 @@ Merge made by the &#39;recursive&#39; strategy.
     <div class="prompt"></div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1.5490275521272072 3.406727428079555
-0.04139268515822508
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
 
 
 <div class="output_png output_subarea ">
-<img src="DataVis_files/DataVis_12_1.png"
+<img src="DataVis_files/DataVis_12_0.png"
 >
 </div>
 
@@ -13720,7 +13692,7 @@ Merge made by the &#39;recursive&#39; strategy.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#suppress annoying warnings about pandas assignment</span>
@@ -13784,8 +13756,8 @@ Merge made by the &#39;recursive&#39; strategy.
     <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
     <span class="k">if</span> <span class="n">log_y</span><span class="p">:</span>
         <span class="n">small_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">small_add</span><span class="p">)</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">small_add</span><span class="p">)</span>
+    <span class="c1">#print(ymin, ymax)</span>
+    <span class="c1">#print(small_add)</span>
     <span class="c1">#ax.set_ylim(ymin+small_add,ymax)</span>
 
     <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="n">ymin</span><span class="o">+</span><span class="n">small_add</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
@@ -13920,6 +13892,7 @@ Merge made by the &#39;recursive&#39; strategy.
 
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Lockdown Days&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Death vs Intensive Care Admissions&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;18&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig2.png&#39;</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
@@ -13977,6 +13950,8 @@ Merge made by the &#39;recursive&#39; strategy.
     <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Country &#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
     
     <span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Country Comparison&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;18&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig3.png&#39;</span><span class="p">)</span>
 <span class="c1">#format_x_date(ax)</span>
 </pre></div>
@@ -13988,7 +13963,7 @@ Merge made by the &#39;recursive&#39; strategy.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to html_toc DataVis.ipynb
@@ -14013,7 +13988,7 @@ Merge made by the &#39;recursive&#39; strategy.
 [NbConvertApp] Making directory DataVis_files
 [NbConvertApp] Making directory DataVis_files
 [NbConvertApp] Making directory DataVis_files
-[NbConvertApp] Writing 350576 bytes to DataVis.html
+[NbConvertApp] Writing 351121 bytes to DataVis.html
 </pre>
 </div>
 </div>
@@ -14024,7 +13999,7 @@ Merge made by the &#39;recursive&#39; strategy.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add DataVis*
@@ -14035,6 +14010,41 @@ Merge made by the &#39;recursive&#39; strategy.
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[master ba11abd] move cells
+ 9 files changed, 1571 insertions(+), 1459 deletions(-)
+ rewrite DataVis.ipynb (88%)
+ create mode 100644 DataVis_files/DataVis_10_1.png
+ create mode 100644 DataVis_files/DataVis_12_1.png
+ rewrite DataVis_files/DataVis_8_0.png (99%)
+ rewrite Fig1.png (99%)
+ rewrite Fig2.png (97%)
+ rewrite Fig3.png (98%)
+Counting objects: 31, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (31/31), done.
+Writing objects: 100% (31/31), 641.63 KiB | 0 bytes/s, done.
+Total 31 (delta 15), reused 0 (delta 0)
+remote: Resolving deltas: 100% (15/15), completed with 6 local objects.
+To https://github.com/mtinti/COVID-19.git
+   ac4e54a..ba11abd  master -&gt; master
+Branch master set up to track remote branch master from origin.
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
