@@ -7,7 +7,30 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
 
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'https://unpkg.com/jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
 
 <style type="text/css">
     /*!
@@ -13099,14 +13122,14 @@ $( document ).ready(function(){
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="COVID-19-data-analysis">COVID-19 data analysis<a class="anchor-link" href="#COVID-19-data-analysis">&#182;</a></h1><p><img src=coronavirus-DNA-720.png  width="1200" ></p>
+<h2 id="COVID-19-data-analysis">COVID-19 data analysis<a class="anchor-link" href="#COVID-19-data-analysis">&#182;</a></h2><p><img src=coronavirus-DNA-720.png  width="1200" ></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[123]:</div>
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#see online at https://covid19-jyy3.onrender.com/analysis</span>
@@ -13119,12 +13142,12 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[158]:</div>
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#Download world dataset</span>
 <span class="o">!</span>curl https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv -o deaths_global.csv 
-    
+<span class="n">allDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deaths_global.csv&#39;</span><span class="p">)</span>    
     
 </pre></div>
 
@@ -13144,7 +13167,7 @@ $( document ).ready(function(){
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
-100 55150  100 55150    0     0   128k      0 --:--:-- --:--:-- --:--:--  129k
+100 55150  100 55150    0     0   112k      0 --:--:-- --:--:-- --:--:--  112k
 </pre>
 </div>
 </div>
@@ -13155,7 +13178,7 @@ $( document ).ready(function(){
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[159]:</div>
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#keep Italian repository update</span>
@@ -13189,7 +13212,7 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[160]:</div>
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#libraries</span>
@@ -13215,7 +13238,7 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[161]:</div>
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#suppress annoying warnings about pandas assignment</span>
@@ -13232,7 +13255,7 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[162]:</div>
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#format x axis with dates</span>
@@ -13241,9 +13264,6 @@ Already up-to-date.
     <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">WeekdayLocator</span><span class="p">())</span>
     <span class="c1">#set major ticks format</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
-
-
-
 
 
 <span class="k">def</span> <span class="nf">get_country_data</span><span class="p">(</span><span class="n">selection</span><span class="p">):</span>
@@ -13258,6 +13278,233 @@ Already up-to-date.
     <span class="n">selection</span><span class="o">.</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">+</span><span class="nb">list</span><span class="p">(</span><span class="n">selection</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
     <span class="n">selection</span><span class="p">[</span><span class="s1">&#39;ndate&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">])</span>
     <span class="k">return</span> <span class="n">selection</span>
+
+<span class="k">def</span> <span class="nf">make_fig1</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span>
+    <span class="n">before</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">before</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span> <span class="p">]</span>
+    <span class="n">after</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+
+    <span class="n">after2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span>  <span class="p">]</span>
+    <span class="n">after2</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after2</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ndata&#39;</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span>
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">before</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;before&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;15 days after &#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after2</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;25 days after&#39;</span><span class="p">)</span>
+    <span class="n">format_x_date</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">xmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1">#plt.xticks(rotation=70,ha=&#39;right&#39;)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Deaths (log10)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Death Trend&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;18&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Social Distancing&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig1.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    
+<span class="c1">#plt.style.use(&#39;ggplot&#39;)</span>
+
+<span class="k">def</span> <span class="nf">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">log_y</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">small_add</span><span class="o">=</span><span class="mf">1.1</span>
+    <span class="k">if</span> <span class="n">log_y</span><span class="p">:</span>
+        <span class="n">small_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>    
+    <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+    <span class="c1">#ax.set_ylim(ymin+small_add,ymax)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="n">ymin</span><span class="o">+</span><span class="n">small_add</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+    <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+    <span class="c1">#ax.set_xlim(xmin,xmax)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="n">xmin</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">lollipop_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">date_col</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">value_col</span><span class="o">=</span><span class="s1">&#39;not_admitted_ratio&#39;</span><span class="p">,</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#007acc&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ratio&#39;</span><span class="p">):</span>
+    <span class="c1">#make lollipop</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">value_col</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+    <span class="c1">#make stick</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
+          <span class="n">ymax</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">value_col</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="c1">#set ticks every week</span>
+    <span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">format_x_date</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">ax</span>
+
+<span class="k">def</span> <span class="nf">my_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">date_col</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> 
+            <span class="c1">#value_3=&#39;ricoverati_con_sintomi_change&#39;,</span>
+            <span class="n">value_2</span><span class="o">=</span><span class="s1">&#39;terapia_intensiva_change&#39;</span><span class="p">,</span>
+            <span class="n">value_1</span><span class="o">=</span><span class="s1">&#39;deceduti_daily&#39;</span><span class="p">,</span>
+            
+            <span class="n">label_1</span><span class="o">=</span><span class="s1">&#39;Deaths&#39;</span><span class="p">,</span>
+            <span class="n">label_2</span><span class="o">=</span><span class="s2">&quot;Intensive Care&quot;</span><span class="p">,</span>
+            <span class="c1">#label_3=&quot;Hospital Admissions&quot;,</span>
+           <span class="p">):</span>
+    <span class="c1">#make lollipop</span>
+    <span class="c1">#ax.plot(df[value_3], df[date_col].dt.date, &quot;o&quot;,</span>
+    <span class="c1">#    markersize=5, color=&#39;green&#39;, alpha=0.9,label=label_3)    </span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">value_2</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label_2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">value_1</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
+        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label_1</span><span class="p">)</span>
+
+    
+    <span class="n">xmin</span><span class="o">=</span><span class="n">df</span><span class="p">[[</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">xmax</span><span class="o">=</span><span class="n">df</span><span class="p">[[</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1">#make stick</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span>
+              <span class="n">xmax</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    
+    <span class="c1">#ymin, ymax = ax.get_ylim()</span>
+    <span class="c1">#ax.set_ylim(ymin,ymax)</span>
+    <span class="c1">#ax.spines[&#39;left&#39;].set_bounds(ymin, ymax-0.5)</span>
+    <span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="c1">#set ticks every 3 days</span>
+    <span class="c1">#ax.yaxis.set_major_locator(mdates.WeekdayLocator())</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
+    <span class="c1">#set major ticks format</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
+
+    <span class="c1">#ax.spines[&#39;top&#39;].set_color(&#39;none&#39;)</span>
+    <span class="c1">#ax.spines[&#39;right&#39;].set_color(&#39;none&#39;)</span>
+    <span class="c1">#xmin, xmax = ax.get_xlim()</span>
+    <span class="c1">#ax.spines[&#39;bottom&#39;].set_bounds(0, xmax-1)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+<span class="k">def</span> <span class="nf">make_fig2</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Ellipse</span>
+
+    <span class="n">fig</span><span class="p">,</span><span class="n">axes</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">6</span>
+                                  <span class="p">),</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">my_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ndate&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Cases&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;Social Distancing Measures&#39;</span><span class="p">,</span> 
+                <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;deceduti_daily&#39;</span><span class="p">][</span><span class="mi">14</span><span class="p">]</span><span class="o">+</span><span class="mi">20</span><span class="p">,</span> <span class="n">mdates</span><span class="o">.</span><span class="n">date2num</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">13</span><span class="p">])</span><span class="o">+</span><span class="mf">0.2</span> <span class="p">),</span>
+                <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> 
+                <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> 
+                <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-|&gt;&#39;</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s1">&#39;B)&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
+                   <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                   <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Infected&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">lollipop_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">date_col</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
+                       <span class="n">value_col</span><span class="o">=</span><span class="s1">&#39;terapia_intensiva&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Intensive Care&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Infected&#39;</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Admissions&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s1">&#39;A)&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
+                   <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                   <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">before</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span>
+    <span class="n">before</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">before</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+    <span class="n">after</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span> <span class="p">]</span>
+    <span class="n">after</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+
+    <span class="n">after2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span>  <span class="p">]</span>
+    <span class="n">after2</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after2</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
+
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;ndata&#39;</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span>
+    <span class="c1">#fig,ax=plt.subplots(figsize=(8,8))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">before</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;before&#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;15 days after &#39;</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after2</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;25 days after&#39;</span><span class="p">)</span>
+
+
+    <span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">format_x_date</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">xmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Deaths (log10)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s1">&#39;C)&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
+                   <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
+                   <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Lockdown Days&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig2b.png&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">make_fig3</span><span class="p">():</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
+    <span class="c1">#sns.palplot(sns.color_palette(&quot;Accent&quot;))</span>
+    <span class="n">palette</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;Accent&quot;</span><span class="p">)</span>
+    <span class="n">days_after_lock</span><span class="o">=</span><span class="mi">15</span>
+
+    <span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span>
+    <span class="n">temp</span><span class="p">[</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span>
+                <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">temp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">days_after_lock</span><span class="p">],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+               <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">})</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">temp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">days_after_lock</span><span class="p">:],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Italy&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> 
+
+
+    <span class="n">spain_df</span> <span class="o">=</span> <span class="n">allDf</span><span class="p">[(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Spain&#39;</span><span class="p">)]</span>
+    <span class="n">spain_df</span> <span class="o">=</span>  <span class="n">get_country_data</span><span class="p">(</span><span class="n">spain_df</span><span class="p">)</span>
+    <span class="n">spain_df</span> <span class="o">=</span> <span class="n">spain_df</span><span class="p">[</span><span class="n">spain_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-16&#39;</span><span class="p">]</span>
+    <span class="n">spain_df</span><span class="p">[</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">spain_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span>
+                <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">spain_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">days_after_lock</span><span class="p">],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">})</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">spain_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">days_after_lock</span><span class="p">:],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spain&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> 
+
+
+    <span class="n">uk_df</span> <span class="o">=</span> <span class="n">allDf</span><span class="p">[(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;United Kingdom&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">]</span><span class="o">==</span><span class="mf">55.3781</span><span class="p">)</span>  <span class="p">]</span>
+    <span class="n">uk_df</span> <span class="o">=</span>  <span class="n">get_country_data</span><span class="p">(</span><span class="n">uk_df</span><span class="p">)</span> 
+    <span class="n">uk_df</span> <span class="o">=</span> <span class="n">uk_df</span><span class="p">[</span><span class="n">uk_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-23&#39;</span><span class="p">]</span>
+    <span class="n">uk_df</span><span class="p">[</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">uk_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span>
+                <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">uk_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">days_after_lock</span><span class="p">],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+               <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">})</span> 
+    <span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span><span class="p">,</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">uk_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">days_after_lock</span><span class="p">:],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;UK&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> 
+
+
+
+
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Deaths (log10)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Days from Lockdown&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Country &#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig6.png&#39;</span><span class="p">)</span>
+<span class="c1">#format_x_date(ax)</span>
 </pre></div>
 
     </div>
@@ -13272,9 +13519,16 @@ Already up-to-date.
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="code">code<a class="anchor-link" href="#code">&#182;</a></h2>
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[163]:</div>
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;dati-andamento-nazionale&#39;</span><span class="p">,</span>
@@ -13321,7 +13575,7 @@ Already up-to-date.
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[163]:</div>
+    <div class="prompt output_prompt">Out[30]:</div>
 
 
 
@@ -13405,7 +13659,7 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
@@ -13421,7 +13675,7 @@ Already up-to-date.
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[164]:</div>
+    <div class="prompt output_prompt">Out[31]:</div>
 
 
 
@@ -13603,41 +13857,17 @@ Already up-to-date.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Fig1">Fig1<a class="anchor-link" href="#Fig1">&#182;</a></h2><p>How the death rate changes before and after the introduction of social distancing mesures in Italy?</p>
+<h1 id="Fig1">Fig1<a class="anchor-link" href="#Fig1">&#182;</a></h1><p>How the death rate changes before and after the introduction of social distancing mesures in Italy?</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[150]:</div>
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
-<span class="n">before</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span>
-<span class="n">before</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">before</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-<span class="n">after</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">after</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-
-<span class="n">after2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span>  <span class="p">]</span>
-<span class="n">after2</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after2</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-
-<span class="n">x</span><span class="o">=</span><span class="s1">&#39;ndata&#39;</span>
-<span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span>
-<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">before</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;before&#39;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;15 days after &#39;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after2</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;25 days after&#39;</span><span class="p">)</span>
-<span class="n">format_x_date</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">xmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-<span class="c1">#plt.xticks(rotation=70,ha=&#39;right&#39;)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Deaths (log10)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Death Trend&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;18&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Social Distancing&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig1.png&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">make_fig1</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13656,7 +13886,7 @@ Already up-to-date.
 
 
 <div class="output_png output_subarea ">
-<img src="DataVis_files/DataVis_11_0.png"
+<img src="DataVis_files/DataVis_12_0.png"
 >
 </div>
 
@@ -13669,159 +13899,17 @@ Already up-to-date.
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Fig2">Fig2<a class="anchor-link" href="#Fig2">&#182;</a></h2><p>How many more people die in Italy respect to the people admitted in intensive care?</p>
+<h1 id="Fig2">Fig2<a class="anchor-link" href="#Fig2">&#182;</a></h1><p>How many more people die in Italy respect to the people admitted in intensive care?</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[151]:</div>
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#plt.style.use(&#39;ggplot&#39;)</span>
-
-<span class="k">def</span> <span class="nf">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">log_y</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-    <span class="n">small_add</span><span class="o">=</span><span class="mf">1.1</span>
-    <span class="k">if</span> <span class="n">log_y</span><span class="p">:</span>
-        <span class="n">small_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="mf">1.1</span><span class="p">)</span>    
-    <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
-    <span class="c1">#ax.set_ylim(ymin+small_add,ymax)</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="n">ymin</span><span class="o">+</span><span class="n">small_add</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
-    <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
-    <span class="c1">#ax.set_xlim(xmin,xmax)</span>
-
-    <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_bounds</span><span class="p">(</span><span class="n">xmin</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)</span>
-    
-<span class="k">def</span> <span class="nf">lollipop_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">date_col</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> <span class="n">value_col</span><span class="o">=</span><span class="s1">&#39;not_admitted_ratio&#39;</span><span class="p">,</span>
-                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#007acc&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ratio&#39;</span><span class="p">):</span>
-    <span class="c1">#make lollipop</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="n">value_col</span><span class="p">],</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
-        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
-    <span class="c1">#make stick</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
-          <span class="n">ymax</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">value_col</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-
-    <span class="c1">#set ticks every week</span>
-    <span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-    <span class="n">format_x_date</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">ax</span>
-
-<span class="k">def</span> <span class="nf">my_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">date_col</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span> 
-            <span class="c1">#value_3=&#39;ricoverati_con_sintomi_change&#39;,</span>
-            <span class="n">value_2</span><span class="o">=</span><span class="s1">&#39;terapia_intensiva_change&#39;</span><span class="p">,</span>
-            <span class="n">value_1</span><span class="o">=</span><span class="s1">&#39;deceduti_daily&#39;</span><span class="p">,</span>
-            
-            <span class="n">label_1</span><span class="o">=</span><span class="s1">&#39;Deaths&#39;</span><span class="p">,</span>
-            <span class="n">label_2</span><span class="o">=</span><span class="s2">&quot;Intensive Care&quot;</span><span class="p">,</span>
-            <span class="c1">#label_3=&quot;Hospital Admissions&quot;,</span>
-           <span class="p">):</span>
-    <span class="c1">#make lollipop</span>
-    <span class="c1">#ax.plot(df[value_3], df[date_col].dt.date, &quot;o&quot;,</span>
-    <span class="c1">#    markersize=5, color=&#39;green&#39;, alpha=0.9,label=label_3)    </span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">value_2</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
-        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label_2</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">value_1</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="s2">&quot;o&quot;</span><span class="p">,</span>
-        <span class="n">markersize</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">label_1</span><span class="p">)</span>
-
-    
-    <span class="n">xmin</span><span class="o">=</span><span class="n">df</span><span class="p">[[</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">]]</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">xmax</span><span class="o">=</span><span class="n">df</span><span class="p">[[</span><span class="n">value_1</span><span class="p">,</span><span class="n">value_2</span><span class="p">]]</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="c1">#make stick</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">hlines</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">df</span><span class="p">[</span><span class="n">date_col</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">date</span><span class="p">,</span> <span class="n">xmin</span><span class="o">=</span><span class="n">xmin</span><span class="p">,</span>
-              <span class="n">xmax</span><span class="o">=</span><span class="n">xmax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-    
-    <span class="c1">#ymin, ymax = ax.get_ylim()</span>
-    <span class="c1">#ax.set_ylim(ymin,ymax)</span>
-    <span class="c1">#ax.spines[&#39;left&#39;].set_bounds(ymin, ymax-0.5)</span>
-    <span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-    <span class="c1">#set ticks every 3 days</span>
-    <span class="c1">#ax.yaxis.set_major_locator(mdates.WeekdayLocator())</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DayLocator</span><span class="p">(</span><span class="n">interval</span><span class="o">=</span><span class="mi">3</span><span class="p">))</span>
-    <span class="c1">#set major ticks format</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">mdates</span><span class="o">.</span><span class="n">DateFormatter</span><span class="p">(</span><span class="s1">&#39;%b </span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">))</span>
-
-    <span class="c1">#ax.spines[&#39;top&#39;].set_color(&#39;none&#39;)</span>
-    <span class="c1">#ax.spines[&#39;right&#39;].set_color(&#39;none&#39;)</span>
-    <span class="c1">#xmin, xmax = ax.get_xlim()</span>
-    <span class="c1">#ax.spines[&#39;bottom&#39;].set_bounds(0, xmax-1)</span>
-    <span class="k">return</span> <span class="n">ax</span>
-
-
-<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;default&#39;</span><span class="p">)</span>
-<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Ellipse</span>
-
-<span class="n">fig</span><span class="p">,</span><span class="n">axes</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">6</span>
-                              <span class="p">),</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">my_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;ndate&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Cases&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s1">&#39;Social Distancing Measures&#39;</span><span class="p">,</span> 
-            <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;deceduti_daily&#39;</span><span class="p">][</span><span class="mi">14</span><span class="p">]</span><span class="o">+</span><span class="mi">20</span><span class="p">,</span> <span class="n">mdates</span><span class="o">.</span><span class="n">date2num</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="mi">13</span><span class="p">])</span><span class="o">+</span><span class="mf">0.2</span> <span class="p">),</span>
-            <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> 
-            <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">,</span> 
-            <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s1">&#39;-|&gt;&#39;</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s1">&#39;B)&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
-               <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-               <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Infected&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">lollipop_plot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">date_col</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
-                   <span class="n">value_col</span><span class="o">=</span><span class="s1">&#39;terapia_intensiva&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Intensive Care&#39;</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Infected&#39;</span><span class="p">)</span>
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Admissions&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s1">&#39;A)&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
-               <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-               <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-
-
-<span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">before</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span>
-<span class="n">before</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">before</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-<span class="n">after</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span> <span class="p">]</span>
-<span class="n">after</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-
-<span class="n">after2</span> <span class="o">=</span> <span class="n">df</span><span class="p">[(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-24&#39;</span><span class="p">)</span>  <span class="p">]</span>
-<span class="n">after2</span><span class="p">[</span><span class="s1">&#39;ndata&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">date2num</span><span class="p">(</span><span class="n">after2</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">])</span>
-
-<span class="n">x</span><span class="o">=</span><span class="s1">&#39;ndata&#39;</span>
-<span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span>
-<span class="c1">#fig,ax=plt.subplots(figsize=(8,8))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">before</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;before&#39;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;15 days after &#39;</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">after2</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;25 days after&#39;</span><span class="p">)</span>
-
-
-<span class="n">despine</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span><span class="n">log_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">format_x_date</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xmin</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">xmax</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Deaths (log10)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="s1">&#39;C)&#39;</span><span class="p">,</span> <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> 
-               <span class="n">verticalalignment</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span>
-               <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s1">&#39;Lockdown Days&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig2b.png&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">make_fig2</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13840,7 +13928,48 @@ Already up-to-date.
 
 
 <div class="output_png output_subarea ">
-<img src="DataVis_files/DataVis_13_0.png"
+<img src="DataVis_files/DataVis_14_0.png"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Fig3">Fig3<a class="anchor-link" href="#Fig3">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">make_fig3</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+<div class="output_png output_subarea ">
+<img src="DataVis_files/DataVis_16_0.png"
 >
 </div>
 
@@ -13865,248 +13994,7 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[170]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">uk_df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[170]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>date</th>
-      <th>Death</th>
-      <th>Death_change</th>
-      <th>Death_change_log</th>
-      <th>ndate</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>78</th>
-      <td>2020-04-09</td>
-      <td>7978</td>
-      <td>881.0</td>
-      <td>2.944976</td>
-      <td>737524.0</td>
-    </tr>
-    <tr>
-      <th>79</th>
-      <td>2020-04-10</td>
-      <td>8958</td>
-      <td>980.0</td>
-      <td>2.991226</td>
-      <td>737525.0</td>
-    </tr>
-    <tr>
-      <th>80</th>
-      <td>2020-04-11</td>
-      <td>9875</td>
-      <td>917.0</td>
-      <td>2.962369</td>
-      <td>737526.0</td>
-    </tr>
-    <tr>
-      <th>81</th>
-      <td>2020-04-12</td>
-      <td>10612</td>
-      <td>737.0</td>
-      <td>2.867467</td>
-      <td>737527.0</td>
-    </tr>
-    <tr>
-      <th>82</th>
-      <td>2020-04-13</td>
-      <td>11329</td>
-      <td>717.0</td>
-      <td>2.855519</td>
-      <td>737528.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Extract-UK-data">Extract UK data<a class="anchor-link" href="#Extract-UK-data">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[171]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">allDf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;deaths_global.csv&#39;</span><span class="p">)</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">allDf</span><span class="p">[(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;United Kingdom&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">]</span><span class="o">==</span><span class="mf">55.3781</span><span class="p">)</span>  <span class="p">]</span>
-<span class="n">uk_df</span> <span class="o">=</span>  <span class="n">get_country_data</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>   
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[172]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">palplot</span><span class="p">(</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;Accent&quot;</span><span class="p">))</span>
-<span class="n">palette</span><span class="o">=</span><span class="n">sns</span><span class="o">.</span><span class="n">color_palette</span><span class="p">(</span><span class="s2">&quot;Accent&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="DataVis_files/DataVis_18_0.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[177]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">days_after_lock</span><span class="o">=</span><span class="mi">15</span>
-
-<span class="p">{</span><span class="s1">&#39;visible&#39;</span><span class="p">:</span><span class="kc">False</span><span class="p">}</span>
-<span class="n">fig</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-<span class="n">temp</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span>
-<span class="n">temp</span><span class="p">[</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="s1">&#39;2020-03-9&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span>
-            <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">temp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">days_after_lock</span><span class="p">],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-           <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">})</span> 
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;deceduti_daily_log&#39;</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">temp</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">days_after_lock</span><span class="p">:],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
-            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Italy&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> 
-
-
-<span class="n">spain_df</span> <span class="o">=</span> <span class="n">allDf</span><span class="p">[(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;Spain&#39;</span><span class="p">)]</span>
-<span class="n">spain_df</span> <span class="o">=</span>  <span class="n">get_country_data</span><span class="p">(</span><span class="n">spain_df</span><span class="p">)</span>
-<span class="n">spain_df</span> <span class="o">=</span> <span class="n">spain_df</span><span class="p">[</span><span class="n">spain_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-16&#39;</span><span class="p">]</span>
-<span class="n">spain_df</span><span class="p">[</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">spain_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span>
-            <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">spain_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">days_after_lock</span><span class="p">],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">})</span> 
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">spain_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">days_after_lock</span><span class="p">:],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
-            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Spain&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> 
-
-
-<span class="n">uk_df</span> <span class="o">=</span> <span class="n">allDf</span><span class="p">[(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;United Kingdom&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">allDf</span><span class="p">[</span><span class="s1">&#39;Lat&#39;</span><span class="p">]</span><span class="o">==</span><span class="mf">55.3781</span><span class="p">)</span>  <span class="p">]</span>
-<span class="n">uk_df</span> <span class="o">=</span>  <span class="n">get_country_data</span><span class="p">(</span><span class="n">uk_df</span><span class="p">)</span> 
-<span class="n">uk_df</span> <span class="o">=</span> <span class="n">uk_df</span><span class="p">[</span><span class="n">uk_df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="s1">&#39;2020-03-23&#39;</span><span class="p">]</span>
-<span class="n">uk_df</span><span class="p">[</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">uk_df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-
-
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span>
-            <span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">uk_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">days_after_lock</span><span class="p">],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
-           <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;linestyle&#39;</span><span class="p">:</span><span class="s1">&#39;--&#39;</span><span class="p">})</span> 
-<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;days_from_lockdown&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Death_change_log&#39;</span><span class="p">,</span>
-            <span class="n">data</span><span class="o">=</span><span class="n">uk_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">days_after_lock</span><span class="p">:],</span><span class="n">fit_reg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="n">palette</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;UK&#39;</span><span class="p">,</span><span class="n">marker</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> 
-
-
-
-
-
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="n">temp</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Deaths (log10)&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Days from Lockdown&#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="s1">&#39;16&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Country &#39;</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span><span class="n">loc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;Fig6.png&#39;</span><span class="p">)</span>
-<span class="c1">#format_x_date(ax)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-
-
-<div class="output_png output_subarea ">
-<img src="DataVis_files/DataVis_19_0.png"
->
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[174]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>jupyter nbconvert --to html_toc DataVis.ipynb
@@ -14131,8 +14019,7 @@ Already up-to-date.
 [NbConvertApp] Making directory DataVis_files
 [NbConvertApp] Making directory DataVis_files
 [NbConvertApp] Making directory DataVis_files
-[NbConvertApp] Making directory DataVis_files
-[NbConvertApp] Writing 353407 bytes to DataVis.html
+[NbConvertApp] Writing 349934 bytes to DataVis.html
 </pre>
 </div>
 </div>
@@ -14143,7 +14030,7 @@ Already up-to-date.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[137]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>git add DataVis*
@@ -14154,45 +14041,6 @@ Already up-to-date.
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[master 3be8751] update
- 12 files changed, 1190 insertions(+), 1350 deletions(-)
- rewrite DataVis.ipynb (91%)
- rewrite DataVis_files/DataVis_11_0.png (98%)
- rewrite DataVis_files/DataVis_13_0.png (98%)
- rewrite DataVis_files/DataVis_18_0.png (99%)
- rewrite DataVis_files/DataVis_19_0.png (98%)
- rewrite Fig1.png (99%)
- rewrite Fig2b.png (98%)
- rewrite Fig3.png (99%)
- rewrite Fig4.png (97%)
- rewrite Fig5.png (98%)
- create mode 100644 Fig6.png
-Counting objects: 33, done.
-Delta compression using up to 8 threads.
-Compressing objects: 100% (33/33), done.
-Writing objects: 100% (33/33), 886.04 KiB | 0 bytes/s, done.
-Total 33 (delta 12), reused 0 (delta 0)
-remote: Resolving deltas: 100% (12/12), completed with 3 local objects.
-To https://github.com/mtinti/COVID-19.git
-   af63980..3be8751  master -&gt; master
-Branch master set up to track remote branch master from origin.
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -14215,6 +14063,10 @@ Branch master set up to track remote branch master from origin.
 </body>
 
  
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {}, "version_major": 2, "version_minor": 0}
+</script>
 
 
 </html>
