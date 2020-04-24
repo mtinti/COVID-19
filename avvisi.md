@@ -5,6 +5,8 @@
 ## Avvisi
 
 ```diff
+- 23/04/2020: dati Regione Lazio parziali (casi testati non completi)
+- 23/04/2020: dati Regione Campania parziali (casi testati non aggiornati)
 - 21/04/2020: dati Regione Lombardia parziali (casi testati non aggiornati)
 - 20/04/2020: dati Regione Lombardia ricalcolati (ricalcolo di casi testati - eliminazione duplicati)
 - 15/04/2020: dati Regione Friuli Venezia Giulia ricalcolati (ricalcolo di isolamento domiciliare e dimessi/guariti)
