@@ -85,17 +85,20 @@ def despine(ax,log_y=False):
     ax.spines['bottom'].set_bounds(xmin+0.5, xmax)
     
 def lollipop_plot(df, ax, date_col='data', value_col='not_admitted_ratio',
-                 color='#007acc',label='Ratio'):
+                 color='#007acc',label='Ratio',do_despine=True,
+                  do_format_date=True,markersize=5,linewidth=5):
     #make lollipop
     ax.plot(df[date_col].dt.date, df[value_col], "o",
-        markersize=5, color=color, alpha=0.9,label=label)
+        markersize=markersize, color=color, alpha=0.9,label=label)
     #make stick
     ax.vlines(x=df[date_col].dt.date, ymin=0, 
-          ymax=df[value_col], color=color, alpha=0.2, linewidth=5)
+          ymax=df[value_col], color=color, alpha=0.2, linewidth=linewidth)
 
     #set ticks every week
-    despine(ax)
-    format_x_date(ax)
+    if do_despine:
+        despine(ax)
+    if do_format_date:
+        format_x_date(ax)
     
     return ax
 
@@ -145,8 +148,8 @@ def make_fig2(df):
     from matplotlib.patches import Ellipse
 
     fig,axes=plt.subplots(figsize=(16,6
-                                  ),ncols=3)
-
+                                  ),ncols=2)
+    """
     ax=axes[1]
     ax = my_plot(df, ax)
     df['ndate']=date2num(df['data'])
@@ -164,7 +167,7 @@ def make_fig2(df):
                    transform=ax.transAxes,fontsize=16)
 
     ax.legend(loc=2, bbox_to_anchor=(0.5, 0.3), title='Infected')
-    
+    """
     ax=axes[0]
     ax = lollipop_plot(df, ax, date_col='data',
                        value_col='terapia_intensiva',label='Intensive Care')
@@ -178,7 +181,7 @@ def make_fig2(df):
                    transform=ax.transAxes,fontsize=16)
 
 
-    ax=axes[2]
+    ax=axes[1]
     before = df[df['data']<'2020-03-9']
     before['ndata']=date2num(before['data'])
     after = df[(df['data']>'2020-03-9') & (df['data']<'2020-03-24') ]
@@ -271,4 +274,14 @@ def make_fig3(df,allDf):
     plt.title('Country Comparison',fontsize='18')
     plt.tight_layout()
     plt.savefig('Fig3.png')
-#format_x_date(ax)
+
+    
+def merge_legends(axes):
+    lines = []
+    labels = []
+    for ax in axes:  
+        tlines, tlabels = ax.get_legend_handles_labels()
+        lines+=tlines
+        labels+=tlabels
+    return lines,labels
+    
