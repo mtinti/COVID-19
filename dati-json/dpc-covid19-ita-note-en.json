@@ -504,7 +504,11 @@
         "note": "tested cases not updated"
     },
     {
+<<<<<<< HEAD
         "codice": "dc-IT-0008",
+=======
+        "codice": "dc-EN-0008",
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
         "data": "2020-04-24T17:00:00",
         "dataset": "dati-regioni",
         "stato": "ITA",
@@ -518,7 +522,11 @@
         "note": " information analysis (recovered under revision)"
     },
     {
+<<<<<<< HEAD
         "codice": "dc-IT-0009",
+=======
+        "codice": "dc-EN-0009",
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
         "data": "2020-04-24T17:00:00",
         "dataset": "dati-andamento-nazionale",
         "stato": "ITA",
@@ -532,7 +540,11 @@
         "note": " information analysis (recovered under revision)"
     },
     {
+<<<<<<< HEAD
         "codice": "dc-IT-0010",
+=======
+        "codice": "dc-EN-0010",
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
         "data": "2020-04-24T17:00:00",
         "dataset": "dati-regioni",
         "stato": "ITA",
@@ -546,7 +558,11 @@
         "note": "ricalcolo casi testati (1.237 tamponi aggiunti)"
     },
     {
+<<<<<<< HEAD
         "codice": "dc-IT-0011",
+=======
+        "codice": "dc-EN-0011",
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
         "data": "2020-04-24T17:00:00",
         "dataset": "dati-andamento-nazionale",
         "stato": "ITA",
@@ -560,7 +576,11 @@
         "note": "recalculation of tests (1.237 tests added)"
     },
     {
+<<<<<<< HEAD
         "codice": "dc-IT-0012",
+=======
+        "codice": "dc-EN-0012",
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
         "data": "2020-04-26T17:00:00",
         "dataset": "dati-regioni",
         "stato": "ITA",
@@ -574,7 +594,11 @@
         "note": "recalculation of tested cases"
     },
     {
+<<<<<<< HEAD
         "codice": "dc-IT-0013",
+=======
+        "codice": "dc-EN-0013",
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
         "data": "2020-04-26T17:00:00",
         "dataset": "dati-andamento-nazionale",
         "stato": "ITA",
@@ -586,5 +610,120 @@
         "tipologia_avviso": "data correction",
         "avviso": "recalculation of informations",
         "note": "recalculation of tested cases"
+<<<<<<< HEAD
+=======
+    },
+    {
+        "codice": "dc-EN-0014",
+        "data": "2020-05-01T17:00:00",
+        "dataset": "dati-regioni",
+        "stato": "ITA",
+        "codice_regione": 12,
+        "regione": "Lazio",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of 41 deaths (8 in the last 48 hours and 33 during April)"
+    },
+    {
+        "codice": "dc-EN-0015",
+        "data": "2020-05-01T17:00:00",
+        "dataset": "dati-andamento-nazionale",
+        "stato": "ITA",
+        "codice_regione": 12,
+        "regione": "Lazio",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of 41 deaths (8 in the last 48 hours and 33 during April)"
+    },
+    {
+        "codice": "dc-EN-0016",
+        "data": "2020-05-02T17:00:00",
+        "dataset": "dati-regioni",
+        "stato": "ITA",
+        "codice_regione": 3,
+        "regione": "Lombardia",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of 329 deaths (47 today and 282 during April)"
+    },
+    {
+        "codice": "dc-EN-0017",
+        "data": "2020-05-02T17:00:00",
+        "dataset": "dati-andamento-nazionale",
+        "stato": "ITA",
+        "codice_regione": 3,
+        "regione": "Lombardia",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of 329 deaths (47 today and 282 during April)"
+    },
+    {
+        "codice": "dc-EN-0018",
+        "data": "2020-05-04T17:00:00",
+        "dataset": "dati-regioni",
+        "stato": "ITA",
+        "codice_regione": 20,
+        "regione": "Sardegna",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of new positives and recovered"
+    },
+    {
+        "codice": "dc-EN-0019",
+        "data": "2020-05-04T17:00:00",
+        "dataset": "dati-andamento-nazionale",
+        "stato": "ITA",
+        "codice_regione": 20,
+        "regione": "Sardegna",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of new positives and recovered"
+    },
+    {
+        "codice": "dc-EN-0020",
+        "data": "2020-05-06T17:00:00",
+        "dataset": "dati-regioni",
+        "stato": "ITA",
+        "codice_regione": 3,
+        "regione": "Lombardia",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "recalculation of recovered people (increase)"
+    },
+    {
+        "codice": "dc-EN-0021",
+        "data": "2020-05-06T17:00:00",
+        "dataset": "dati-andamento-nazionale",
+        "stato": "ITA",
+        "codice_regione": 3,
+        "regione": "Lombardia",
+        "codice_provincia": null,
+        "provincia": "",
+        "sigla_provincia": "",
+        "tipologia_avviso": "data correction",
+        "avviso": "recalculation of information",
+        "note": "update of recovered people (increase)"
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
     }
 ]

@@ -46,7 +46,11 @@ Tutte le modifiche al progetto, nuove funzionalità e informazioni sono document
 
 ## 2020-04-21
 
+<<<<<<< HEAD
 - Aggiunta: nuovo shape file con misure di contenimento a livello subregionale (province, comuni e frazioni).
+=======
+- Aggiunta: nuovo shape file con misure di contenimento a livello subregionale (province, comuni e frazioni) con rlativi metadata.
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
 
 ## 2020-04-22
 
@@ -59,6 +63,7 @@ Tutte le modifiche al progetto, nuove funzionalità e informazioni sono document
 
 ## 2020-04-27
 
+<<<<<<< HEAD
 - Aggiunta: aggiornamento al26/4/2020 shape file con misure di contenimento a livello subregionale (province, comuni e frazioni).
 
 ## Prossimi aggiornamenti
@@ -67,5 +72,23 @@ Tutte le modifiche al progetto, nuove funzionalità e informazioni sono document
 - GraphQL
 
 ## Ipotesi modifiche
+=======
+- Aggiunta: aggiornamento al 26/4/2020 shape file e relativi metadata con misure di contenimento a livello subregionale (province, comuni e frazioni).
+
+## 2020-05-04
+
+- Aggiunta: aggiornamento al 4/5/2020 shape file e relativi metadati con misure di contenimento a livello nazionale a seguito del DPCM 26/4/2020.
+
+## 2020-05-05
+
+- API Rest (Json) private beta
+- GraphQL private beta
+
+## 2020-05-06
+
+- Aggiunta: aggiornamento al 03/05/2020 shape file e relativi metadata con misure di contenimento a livello subregionale (province, comuni e frazioni).
+
+## Prossimi aggiornamenti
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
 
 - Cambio codice_regione P.A. Bolzano e P.A. Trento: da 04 a 21 per P.A. Bolzano e da 04 a 22 per P.A. Trento (codice provincia)

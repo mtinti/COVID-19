@@ -57,11 +57,34 @@ All changes to the project, new features and information are documented in this 
 - Add:metadata of the new dpc supplies contracts dataset (contracts and payments) in DCAT-AP-IT format
 - Integrated README with specifications for the data model of the dataset areas (national and subregional)
 
+<<<<<<< HEAD
 ## Next updated
 
 - API Rest (Json)
 - GraphQL
 
 ## hypothesis changes
+=======
+## 2020-04-27
+
+- Add: update to 26/4/2020 shape file with subregional containment measures (provinces, municipalities and hamlets) with related metadata.
+
+## 2020-05-04
+
+- Add: update at 4/5/2020 shape file with national containment measures according to DPCM 26/4/2020 with related metadata.
+
+
+## 2020-05-05
+
+- API Rest (Json) private beta
+- GraphQL private beta
+
+## 2020-05-06
+
+- Add: update to 03/05/2020 shape file with subregional containment measures (provinces, municipalities and hamlets) with related metadata.
+
+
+## Next update
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
 
 - Change codice_regione for P.A. Bolzano and P.A. Trento: from 04 to 21 for P.A. Bolzano and from 04 to 22 for P.A. Trento (province code)

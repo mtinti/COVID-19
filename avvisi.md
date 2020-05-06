@@ -7,6 +7,11 @@
 ## Avvisi
 
 ```diff
+<<<<<<< HEAD
+=======
+- 02/05/2020: dati Regione Lombardia ricalcolati 329 decessi (47 di oggi e 282 da riconteggio di aprile)
+- 01/05/2020: dati Regione Lazio ricalcolati 41 decessi (8 nelle ultime 48 ore e 33 ad aprile)
+>>>>>>> 44dde7ca11b83b24840315d553018c817698452f
 - 26/04/2020: dati Regione Valle d'Aosta ricalcolati (casi testati)
 - 24/04/2020: dati Regione Sardegna ricalcolati (1.237 tamponi aggiunti)
 - 24/04/2020: dati Regione Friuli Venezia Giulia in fase di revisione su dimessi/guariti
